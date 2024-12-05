@@ -1,0 +1,169 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    height: 25vh;
+    min-height: 150px; /* Altura mínima para pantallas pequeñas */
+    background: #333;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; /* Distribuye los elementos equitativamente */
+    padding: 0 2rem; /* Espaciado interno */
+}
+
+header img {
+    height: 100%;
+    width: auto;
+    max-height: 80%; /* Evita que la imagen sea demasiado alta */
+    border-radius: 50%; /* Ejemplo: para una imagen circular */
+}
+
+header h1 {
+    font-size: 1.5rem; /* Ajusta el tamaño del texto */
+    margin: 0;
+}
+
+header nav {
+    display: flex;
+    gap: 1rem; /* Espaciado entre enlaces */
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s; /* Animación suave en hover */
+}
+
+header nav a:hover {
+    color: #ccc; /* Cambia el color al pasar el mouse */
+}
+section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+.projects img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.flip-container {
+    float: left;
+    font-size: 1.2em;
+    margin: 1% 0 0 1%;
+    perspective: 800px;
+    transition: all 0.3s ease 0s;
+    width: 100%;
+    height: 300px;
+}
+
+.flip-container:hover .card {
+    transform: rotateY(180deg);
+}
+
+.card {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease 0s;
+}
+
+.card-front-vfp, .card-front-car, .card-back-vfp, .card-back-car, .card-back-black, .card-front-black{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    
+    font-size: 1.5rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    padding : 5px;
+}
+
+.card-front-vfp{
+    background-image: url('images/vectorfieldplotter.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.card-front-car {
+    background-image: url('images/neuralcar.png');
+    background-size: cover;
+    background-position: center; 
+}
+
+.card-back-vfp {
+    background-color: #f44336;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-back-car {
+    background-color: #6b0a66;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-front-black {
+    background-image: url('images/blackjack.png');
+    background-size: cover;
+    background-position: center; 
+    padding: 10px;
+    
+}
+
+.card-front-black h3{
+    color: white;
+}
+
+.card-back-black {
+    background-color: #249236;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    color: black;
+}
+.card-description {
+    color: white;
+    font-size: 1rem;
+}
+.card-link {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
