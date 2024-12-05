@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Field Plotter</title>
+    
+    <!-- Añadir los iconos -->
+    <link rel="icon" href="/icon-192x192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/icon-512x512.png" sizes="512x512" type="image/png">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    
+    <div id="canvas-container">
+        <canvas id="myCanvas"></canvas>
+        <canvas id="top-canvas"></canvas>
+        <button id="clear-button">🧹</button>
+    </div>
+    
+    <div id="options-container">
+
+        <div class="coordinate-container">
+            <div>
+                <label for="x-coord-input">X:</label>
+                <input id="x-coord-input" class="coord-input" type="text" placeholder="x">
+            </div>
+            <div>
+                <label for="y-coord-input">Y:</label>
+                <input id="y-coord-input" class="coord-input" type="text" placeholder="y">
+            </div>
+        </div>
+
+        <div class="subcells-container">
+            <div class="yanosequeinventarmemas">
+                <label for="cell-size-input">Tamaño de celda</label>
+                <input id="cell-size-input" class="coord-input" type="number" placeholder="tamaño">
+            </div>
+            <div class="yanosequeinventarmemas">
+                <label for="subcells-input">Densidad de flechas</label>
+                <input id="subcells-input" class="coord-input" type="number" min="0" max="4" step="1" placeholder="densidad">
+            </div>
+
+            <div class="yanosequeinventarmemas">
+                <label for="arrow-size-input">Tamaño flechas</label>
+                <input id="arrow-size-input" class="coord-input" type="number" min="0" step="1" placeholder="flechas">
+            </div>
+        </div>
+            
+        <div>
+            <label class="normalized-checkbox">
+                Normalizar <input id="normalized-checkbox" type="checkbox" checked>
+                <span></span>    
+            </label>
+
+            <label class="normalized-checkbox">
+                Partícula <input id="particle-checkbox" type="checkbox" checked>
+                <span></span>    
+            </label>
+            
+        </div>
+        
+      
+        <div class="initial-conditions-container">
+            <div class="initial-conditions">
+                <label>(x0,y0)</label>
+                <div class="parentesis">
+                    <label>(</label>
+                    <input id="x-initial-condition" class="initial-conditions-inputs" type="number" min="-10" max="10" step="1" placeholder="x0">
+                    <label>,</label>
+                    <input  id="y-initial-condition" class="initial-conditions-inputs" type="number" min="-10" max="10" step="1" placeholder="y0">
+                    <label>)</label>
+                </div>
+                
+            </div>
+    
+            <div class="initial-conditions">
+                <label >(vx0,vy0)</label>
+                <div class="parentesis">
+                    <label>(</label>
+                    <input id="vx-initial-condition" class="initial-conditions-inputs" type="number" min="1" max="10" step="1" placeholder="x'">
+                    <label>,</label>
+                    <input id="vy-initial-condition" class="initial-conditions-inputs" type="number" min="1" max="10" step="1" placeholder="y'">
+                    <label>)</label>
+                </div>
+            </div>
+        </div>
+        
+        <input id="animate-button" type="button" value="Animar">
+        <input id="stop-button" type="button" value="Parar">
+    </div>
+    
+    <script src="simulation.js"></script>
+    <script src="particle.js"></script>
+    <script src="vector.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

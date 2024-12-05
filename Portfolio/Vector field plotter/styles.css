@@ -1,0 +1,344 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /* Previene el scroll */
+}
+
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    display: flex;
+    padding: 10px;
+    background: linear-gradient(135deg, #60c2ff, #6afdc5, #fbc1a8, #ff60a5);
+    background-size: 300% 300%;
+    animation: gradientAnimation 8s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#canvas-container {
+    flex: 3;
+    background: transparent;
+    position: relative;
+}
+
+#myCanvas {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2),
+        /* Sombra externa */
+        inset 0 0 30px rgba(255, 255, 255, 0.2);
+    z-index: -1;
+}
+
+#top-canvas {
+    z-index: 0;
+}
+
+#clear-button{
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    border-radius: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3); 
+
+    margin: 10px;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2),
+        inset 0 0 30px rgba(255, 255, 255, 0.2); /* Sombra interna */
+
+    width: 5em;
+    height: 3em;
+
+    /* Alineación de contenido */
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    text-align: center;
+
+    
+    cursor: pointer;
+    outline: none;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    border-radius: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3); 
+}
+
+#options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 0 0 10px;
+    /* Para separarlo del canvas*/
+    padding: 10px;
+    flex-basis: 30%;
+    /* Fijar un tamaño mínimo*/
+
+    /* Para el texto */
+    color: white;
+    font-size: 18px;
+    text-align: center;
+
+    /* Adornos */
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2),
+        /* Sombra externa */
+        inset 0 0 30px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 4px black;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /*Compatibilidad con Safari */
+    
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    
+
+    position: relative;
+    /* Para los pseudoelementos */
+}
+
+/* Destellos blancos */
+#options-container:after {
+    border-radius: 20px;
+    /* Para que los destellos no se salgan */
+    content: '';
+
+    position: absolute;
+    /* Permite posicionar el pseudo-elemento */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Los efectos en sí */
+    background:
+        linear-gradient(160deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 1) 25%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.4) 75%,
+            rgba(255, 255, 255, 0) 100%);
+    opacity: 0.5;
+    pointer-events: none;
+    /* Para poder seguir interactuando */
+    mix-blend-mode: screen;
+    z-index: -1;
+    /* Asegura que el pseudoelemento esté detrás del contenido */
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+input[type="text"]::placeholder, input[type="number"]::placeholder {
+    color: rgba(51, 51, 51, 0.7);
+}
+
+.initial-conditions-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1.5;
+}
+
+.initial-conditions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    flex: 0 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+    ;
+    border: none;
+    border-radius: 15px;
+    padding: 5px;
+    justify-content: flex-start;
+}
+
+.parentesis {
+    margin: 5px 0 0 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+.parentesis label {
+    margin: 0 5px;
+    font-size: 18px;
+}
+
+.subcells-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: space-around;
+    flex-grow: 2;
+}
+
+#x-coord-input,
+#y-coord-input {
+    width: 75%;
+}
+
+.coordinate-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-basis: 15%;
+}
+
+#cell-size-input,
+.initial-conditions-input {
+    text-align: center;
+}
+
+#cell-size-input::-webkit-outer-spin-button,
+#cell-size-input::-webkit-inner-spin-button,
+.initial-conditions-inputs::-webkit-outer-spin-button,
+.initial-conditions-inputs::-webkit-inner-spin-button {
+    /*quitar las flechitas*/
+    -webkit-appearance: none;
+    margin: 0;
+
+}
+
+#animate-button {
+    margin: 5px 0;
+    width: 100%;
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.6), transparent);
+
+    border: 2px solid #ffffff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #6b6b6b;
+    font-weight: bold;
+
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+}
+
+#animate-button:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+#stop-button {
+    margin: 5px 0;
+    width: 100%;
+    background-color: #b93b3b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#stop-button:hover {
+    background-color: #993131;
+}
+
+.normalized-checkbox {
+    cursor: pointer;
+}
+
+/* Escondemos el checkbox por defecto */
+.normalized-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+/* Estilo del checkbox personalizado */
+.normalized-checkbox span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(145deg, #c2f9ff, #7de2f7);
+    /* Colores brillantes y gradientes */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.normalized-checkbox input[type="checkbox"]:checked+span::after {
+    content: '✓';
+    font: mono;
+    font-size: 16px;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 1px;
+    font-weight: bold;
+}
+
+/* Efecto hover */
+.normalized-checkbox span:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Cambiar el fondo cuando está seleccionado */
+.normalized-checkbox input[type="checkbox"]:checked+span {
+    background: linear-gradient(145deg, #00c6ff, #0072ff);
+    /* Colores más intensos al estar seleccionado */
+    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.yanosequeinventarmemas {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
