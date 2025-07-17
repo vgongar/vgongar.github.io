@@ -10,7 +10,7 @@ class Particle2D{
     }
 
     draw(ctx, index, radius, opacity){
-        ctx.fillStyle = `rgba(178, 34, 34,${opacity})`;
+        ctx.fillStyle = `rgba(126, 41, 0,${opacity})`;
         ctx.beginPath();
         ctx.arc(this.origin.x + this.trail[index][0] * this.cellSize, this.origin.y - this.trail[index][1] * this.cellSize, radius, 0, Math.PI*2);
         ctx.fill();

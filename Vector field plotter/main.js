@@ -1,13 +1,3 @@
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-        console.log('ServiceWorker registrado con éxito:', registration.scope);
-        }, function(err) {
-        console.log('Error en el registro del ServiceWorker:', err);
-        });
-    });
-} 
-
 // canvas
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -20,15 +10,17 @@ const topCtx = topCanvas.getContext("2d");
 topCanvas.height = canvas.height;
 topCanvas.width = canvas.width;
 
+const container = document.getElementById("canvas-container");
 
-const xInput = document.getElementsByClassName("coord-input")[0];
-const yInput = document.getElementsByClassName("coord-input")[1];
+// elementos
+
+const xInput = document.getElementById("x-input");
+const yInput = document.getElementById("y-input");
 
 const xInitialCondition = document.getElementById("x-initial-condition");
 const yInitialCondition = document.getElementById("y-initial-condition");;
 const vxInitialCondition = document.getElementById("vx-initial-condition");
 const vyInitialCondition = document.getElementById("vy-initial-condition");
-
 
 const cellSizeInput = document.getElementById("cell-size-input");
 const subCellsInput = document.getElementById("subcells-input");
@@ -37,6 +29,10 @@ const normalizedCheckbox = document.getElementById("normalized-checkbox");
 const particleCheckbox = document.getElementById("particle-checkbox");
 
 const arrowSizeInput = document.getElementById("arrow-size-input");
+
+const onePlanetPreset = document.getElementById("onePlanetPreset");
+const twoPlanetPreset = document.getElementById("twoPlanetPreset");
+const randomFieldPreset = document.getElementById("randomFieldPreset");
 
 let f1, f2;
 let previousTime = 0; // Tiempo anterior a nivel global
@@ -56,10 +52,144 @@ xInitialCondition.value = 0;
 yInitialCondition.value = 0;
 vxInitialCondition.value = 0.707106;
 vyInitialCondition.value = 0.707106;
-subCellsInput.value = 1;
+subCellsInput.value = 2;
 cellSizeInput.value = 100;
-arrowSizeInput.value = 60;
+arrowSizeInput.value = 32;
  
+normalizedCheckbox.checked = false;
+
+function setOnePlanet(){
+    // Cambiamos los estilos para que se vea resaltado el que clicamos
+    const presets = document.querySelectorAll('.preset');
+    presets.forEach(preset => {
+        preset.classList.remove("selected");
+    });
+    onePlanetPreset.classList.add("selected");
+
+    clearButton.click();
+
+    // Ecuaciones del campo gravitatorio ejercido por un cuerpo situados en el origen
+    xInput.value = "-x/(x**2 + y**2)**1.5"
+    yInput.value =  "-y/(x**2 + y**2)**1.5"
+
+    xInitialCondition.value = 1;
+    yInitialCondition.value = 0;
+    vxInitialCondition.value = 0;
+    vyInitialCondition.value = 1;
+    subCellsInput.value = 2;
+    cellSizeInput.value = 100;
+    arrowSizeInput.value = 32;
+    
+    normalizedCheckbox.checked = false;
+    animateButton.click();
+}
+
+function setTwoPlanet(){
+    // Cambiamos los estilos para que se vea resaltado el que clicamos
+    const presets = document.querySelectorAll('.preset');
+    presets.forEach(preset => {
+        preset.classList.remove("selected");
+    });
+    twoPlanetPreset.classList.add("selected");
+
+    clearButton.click();
+
+    // Ecuaciones del campo gravitatorio ejercido por dos cuerpos situados en (1,0) y en (-1,0)
+    xInput.value = "(1-x)/((1-x)**2 + y**2)**1.5 + (-1-x)/((-1-x)**2 + y**2)**1.5"
+    yInput.value =  "(-y)/((1-x)**2 + y**2)**1.5 + (-y)/((-1-x)**2 + y**2)**1.5"
+
+    xInitialCondition.value = 0;
+    yInitialCondition.value = 0;
+    vxInitialCondition.value = 0.707106;
+    vyInitialCondition.value = 0.707106;
+    subCellsInput.value = 2;
+    cellSizeInput.value = 100;
+    arrowSizeInput.value = 32;
+    
+    normalizedCheckbox.checked = false;
+    animateButton.click();
+}
+
+function setRandomField(){
+    // Cambiamos los estilos para que se vea resaltado el que clicamos
+    const presets = document.querySelectorAll('.preset');
+    presets.forEach(preset => {
+        preset.classList.remove("selected");
+    });
+    randomFieldPreset.classList.add("selected");
+
+    clearButton.click();
+
+    xInput.value = "Math.random()*2-1"
+    yInput.value =  "Math.random()*2-1"
+
+    xInitialCondition.value = 0;
+    yInitialCondition.value = 0;
+    vxInitialCondition.value = 0;
+    vyInitialCondition.value = 0;
+    subCellsInput.value = 2;
+    cellSizeInput.value = 100;
+    arrowSizeInput.value = 32;
+    
+    normalizedCheckbox.checked = false;
+
+    animateButton.click();
+}
+
+function setPeriodicField(){
+    // Cambiamos los estilos para que se vea resaltado el que clicamos
+    const presets = document.querySelectorAll('.preset');
+    presets.forEach(preset => {
+        preset.classList.remove("selected");
+    });
+    randomFieldPreset.classList.add("selected");
+
+    clearButton.click();
+
+    xInput.value = "-x*Math.cos(t*x)"
+    yInput.value =  "-y*Math.sin(t*y)"
+
+    xInitialCondition.value = 0.33;
+    yInitialCondition.value = 0.33;
+    vxInitialCondition.value = 0;
+    vyInitialCondition.value = 0;
+    subCellsInput.value = 3;
+    cellSizeInput.value = 100;
+    arrowSizeInput.value = 32;
+    
+    normalizedCheckbox.checked = false;
+
+    animateButton.click();
+}
+
+// Para que pueda reajustarse el canvas
+function resizeCanvas() {
+    // Ajusta el tamaño del canvas al contenedor
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+
+    topCanvas.width = canvas.width;
+    topCanvas.height = canvas.height;
+
+    // el cambio de orientación de los ejes se hace en cada función que lo necesite
+    ctx.translate(canvas.width/2, canvas.height/2);
+    topCtx.translate(canvas.width/2, canvas.height/2);
+
+    const origin = {
+        x : Math.floor(Math.floor(canvas.width / cellSizeInput.value)/2) * cellSizeInput.value,
+        y : Math.floor(Math.floor(canvas.height / cellSizeInput.value)/2) * cellSizeInput.value
+    }; 
+
+    const particle = new Particle2D(origin, cellSizeInput.value, new Vector(0,0), new Vector(0,0));
+    const simulation = new Simulation(
+        particle,
+        (t,x,y,z,w) => new Vector(z, w, f1(t,x,y), f2(t,x,y)));
+
+    var idAnimacion;
+}
+
+// Llama a la función cuando la ventana cambia de tamaño
+window.addEventListener("resize", resizeCanvas);
 
 // el cambio de orientación de los ejes se hace en cada función que lo necesite
 ctx.translate(canvas.width/2, canvas.height/2);
@@ -79,12 +209,13 @@ var idAnimacion;
 
 const animateButton = document.getElementById("animate-button");
 animateButton.addEventListener('click', function() {
+    // Llama a la función inicialmente
+    resizeCanvas();
     // actualizamos la partícula con los datos de la página
     particle.origin = origin;
     particle.cellSize = cellSizeInput.value;
     particle.position = new Vector(Number(xInitialCondition.value), Number(yInitialCondition.value));
     particle.velocity = new Vector(Number(vxInitialCondition.value), Number(vyInitialCondition.value));
-
 
     // intentamos crear funciones f1 y f2
     try {
@@ -99,6 +230,9 @@ animateButton.addEventListener('click', function() {
     simulation.particle = particle;
     simulation.F = (t, x, y, z, w) => new Vector(z, w, f1(t, x, y), f2(t, x, y));
 
+    // dibujamos el canvas con el color de fondo
+    ctx.fillStyle="rgb(255, 220, 157)";
+    ctx.fillRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
 
     if (!isAnimating) {
         isAnimating = true; // Cambiar el estado a animando
@@ -119,9 +253,10 @@ stopButton.addEventListener("click", function() {
     }
 });
 
+
 const clearButton = document.getElementById("clear-button");
 clearButton.addEventListener("click", function(){
-    ctx.fillStyle="white";
+    ctx.fillStyle="rgb(255, 220, 157)";
     ctx.fillRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height); 
     topCtx.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
 });
@@ -196,7 +331,6 @@ topCanvas.addEventListener("touchmove", function(e) {
     }
 });
 
-
 topCanvas.addEventListener("mouseup", function(e){
     isDragging = false;
 
@@ -223,7 +357,6 @@ topCanvas.addEventListener("touchend", function(e) {
     animateButton.click();
 });
 
-
 function animate(time) {
     time = time / 1000; // Convertir a segundos
     if (isFirstFrame) {
@@ -245,13 +378,9 @@ function animate(time) {
     if(particleBool){
         simulation.update(time, deltaTime);
     }
-    
 
     // ----------------- DIBUJADO ----------------------------
-
-    // Dibuja el fondo con opacidad para tener el efecto visual de las flechitas
-    ctx.fillStyle = 'rgba(255,255,255,0.1)'; // para tener efecto
-    //ctx.fillStyle = 'rgba(255,255,255,1)'; //normal
+    ctx.fillStyle = 'rgba(255, 220, 157, 0.1)'; // para tener efecto
     ctx.fillRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height); 
 
     drawGrid(ctx, canvas, cellSizeInput.value);
@@ -273,19 +402,12 @@ function animate(time) {
             origin.y -velocityArrowEnd[1] * cellSizeInput.value,
         );
     }
-
-/*     ctx.fillStyle = 'green';
-    ctx.beginPath();
-    ctx.arc(0,0,5,0,Math.PI+2);
-    ctx.fill(); */
     
     if(particleBool){
         for(let i = 0 ; i < particle.trail.length ; i++){
             particle.draw(topCtx,i,8,lerp((i+1)/particle.trail.length,0,1));
         }
     }
-
-    // Solicita el siguiente cuadro de animación
     
     idAnimacion = requestAnimationFrame(animate);
 }
@@ -371,10 +493,10 @@ function drawGrid(ctx, canvas, cellSize){
 
     for(let i = -amountCellsX/2 ; i <= amountCellsX/2 ; i++){
         if(Math.ceil(i) === 0){
-            ctx.strokeStyle = "#e76943";
+            ctx.strokeStyle = "rgb(225, 135, 0)";
             origin.x = i * cellSize;
         } else {
-            ctx.strokeStyle = "#cecece"
+            ctx.strokeStyle = "rgb(255, 233, 169)"
         }
 
         // Líneas verticales
@@ -387,10 +509,10 @@ function drawGrid(ctx, canvas, cellSize){
     for(let i = -amountCellsY/2 ; i <= amountCellsY/2 ; i++){
 
         if(Math.ceil(i) === 0){
-            ctx.strokeStyle = "#FF8A65";
+            ctx.strokeStyle = "rgb(225, 135, 0)";
             origin.y = i * cellSize;
         } else {
-            ctx.strokeStyle = "#cecece"
+            ctx.strokeStyle = "rgb(255, 233, 169)"
         }        
         // Líneas horizontales
         
@@ -403,7 +525,7 @@ function drawGrid(ctx, canvas, cellSize){
 }  
 
 function drawArrow(ctx, fromX, fromY, toX, toY, arrowHeadLength = 10) {
-    ctx.strokeStyle = "#757575";
+    ctx.strokeStyle = "rgb(225, 135, 0)";
     const angle = Math.atan2(toY - fromY, toX - fromX); // Ángulo de la línea de la flecha
   
     // Dibujar la línea de la flecha
@@ -432,8 +554,4 @@ function drawArrow(ctx, fromX, fromY, toX, toY, arrowHeadLength = 10) {
 
 function lerp(t, A, B){
     return A + t*(B-A);
-}
-
-function getMouse(canvas, origin, point, cellSize){
-
 }
