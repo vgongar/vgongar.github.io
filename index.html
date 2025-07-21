@@ -3,70 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Víctor González García</title>
-    <!--Añade la fuente Montserrat-->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Baúl de Víctor</title>
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="light">
     <header>
         <img src="images/foto.jpg" alt="yo">
         <h1>Víctor González García</h1>
     </header>
 
-    <section id="projects">
-        <div class="container">
-
-            <div class="card-grid">
-                <!-- Tarjeta 1 -->
-                <div class="flip-container">
-                    <div class="card">
-                        <div class="card-front-vfp">
-                            <h3 class="card-title">Vector Field Plotter</h3>
-                        </div>
-                        <div class="card-back-vfp">
-                            <p class="card-description">
-                                Este proyecto lo hice para ayudarme a estudiar. 
-                                Dibuja un campo de fuerzas y simula de forma física  
-                                la trayectoria que seguiría una partícula bajo la acción de ese campo. <br>
-                                Programado enteramente en Vanilla JavaScript</p>
-                            <a href="Vector field plotter/index.html" class="card-link" target="_blank">Probar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 2 -->
-                <div class="flip-container">
-                    <div class="card">
-                        <div class="card-front-car">
-                            <h3 class="card-title">Neural Car</h3>
-                        </div>
-                        <div class="card-back-car">
-                            <p class="card-description">En este proyecto se entrena una red neuronal con un algoritmo evolutivo para que conduzca un coche. 
-                                Programado enteramente en Vanilla JavaScript. 
-                                Lo hice siguiendo el siguiente tutorial del youtuber finlandés Radu from Finland: https://youtu.be/NkI9ia2cLhc?si=pxhfeGLmoFPbEryU</p>
-                            <a href="Neural Car/index.html" class="card-link" target="_blank">Probar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="about">
-        <h2>Sobre mí</h2>
-        <p>¡Hola! Soy Víctor González García y soy matemático. Estoy interesado en 
-            Si me tuviera que describir brevemente diría que soy curioso y con muchas ganas de aprender.
-            He participado en proyectos de la universidad y algunos que realizo por hobbie. Esta página esta todavía
-            en construcción. Ahora mismo su funcionalidad se centra en enseñar algunos proyectitos que he hecho. Si
-            tienes alguna sugerencia estaŕé encantado de escucharla! Puedes contactar conmigo por teléfono o correo electrónico.
+        <p>
+            ¡Hola, soy Víctor! Y estás frente a mi baúl. <br>
+            Soy un entusiasmado de la programación y de las matemáticas aparte de muchas otras cosas. 
+            Siempre he sido muy curioso y creativo y por eso siempre estoy con algo entre manos.
+            Muchas veces se me vienen ideas a la cabeza que creo que merecen la pena intentar.
+            Algunas de ellas las llevo a cabo y de esas otras muy pocas
+            están lo suficientemente pulidas como para poder estar aquí. 
+            He preparado una selección de mini-proyectos que quiero compartir contigo. <br>
+            ¡Espero que lo disfrutes tanto como yo!
         </p>
     </section>
 
+    <section id="projects">
+        <h2>Proyectos</h2>
+            <div class="cards">
+                <!-- Tarjeta 1 -->
+                <div class="card shadow">
+                    <img src="images/vectorfieldplotter.png" alt="Miniatura Vector Field"> 
+                    <div>    
+                        <h3>Vector Field Plotter</h3>
+                        <p> 
+                            Dibuja un campo de fuerzas y simula de forma física  
+                            la trayectoria que seguiría una partícula bajo la acción de ese campo.
+                            Programado enteramente usando HTML, CSS y JS vanilla. <br>
+                            La inspiración surgió durante un curso de Mecánica Celeste de la universidad.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5em 0;">
+                            <div class="tags">
+                                <p class="tag">
+                                    #html
+                                </p>
+                                <p class="tag">
+                                    #css
+                                </p>
+                                <p class="tag">
+                                    #javascript
+                                </p>
+                                <p class="tag">
+                                    #simulación
+                                </p>
+                            </div>
+                            <a href="Vector field plotter/index.html" class="button shadow" target="_blank"><strong>Probar</strong></a>
+                        </div>
+                        
+                    </div> 
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="card shadow">
+                    <img src="images/neuralcar.png" alt="Miniatura Neural Car"> 
+                    <div>    
+                        <h3>Neural Car</h3>
+                        <p> 
+                            ¿Cómo funciona un algoritmo de aprendizaje evolutivo? En este proyecto cada coche 
+                            está conducido por una red neuronal. El que llegue más lejos se reproducirá y la siguiente 
+                            generación tendrá un cerebro parecido al de su padre con algo de ruido para simular diversidad. <br>
+                            ¡Observa cómo aprenden a conducir! (Basado en el curso de <a href="http://youtu.be/NkI9ia2cLhc?si=pxhfeGLmoFPbEryU" target="_blank">Radu From Finland</a>)
+                        </p>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5em 0">
+                            <div class="tags">
+                                <p class="tag">
+                                    #html
+                                </p>
+                                <p class="tag">
+                                    #css
+                                </p>
+                                <p class="tag">
+                                    #javascript
+                                </p>
+                                <p class="tag">
+                                    #IA
+                                </p>
+                            </div>
+                            <a href="Neural Car/index.html" class="button shadow" target="_blank"><strong>Probar</strong></a>
+                        </div>            
+                    </div> 
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+                <div class="card shadow">
+                    <img src="images/informe.png" alt="Miniatura informe"> 
+                    <div>    
+                        <h3>Análisis de la efectividad goleadora</h3>
+                        <p> 
+                            En este trabajo, realizado como parte de un curso de estadística computacional de la UGR, 
+                            se nos dió la libertad de tomar cualquier conjunto de datos que quisiésemos y aplicáramos 
+                            la teoría vista. Nosotros decidimos crear un modelo que predice la probabilidad de que un 
+                            cierto disparo fuese gol. Se nos ocurrió la idea de comparar esta última con el resultado 
+                            correspondiente de dicha acción (gol vs. no gol) para estudiar la influencia que produce 
+                            dicho jugador en la jugada. Por ejemplo, si el modelo predice que cierto disparo tenía un 
+                            20% de ser gol y efectivamente fue gol podemos decir que añadió un valor de 1-0.2=0.8, lo 
+                            cual se puede interpretar de forma positiva. Con esta idea en mente se elaboró un ránking 
+                            de los jugadores más influyentes de los últimos años en La Liga.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5em 0">
+                            <div class="tags">
+                                <p class="tag">
+                                    #r
+                                </p>
+                                <p class="tag">
+                                    #latex
+                                </p>
+                            </div>
+                            <a href="trabajo R/Informe.pdf" class="button shadow" target="_blank"><strong>Descargar</strong></a>
+                        </div>            
+                    </div> 
+                </div>
+            </div>
+    </section>
+
+    
+
     <section id="contact">
         <h2>Contacto</h2>
-        <p>¿Quieres trabajar conmigo? Escríbeme:</p>
+        <p>¿Tienes alguna duda o sugerencia? Escríbeme:</p>
         <p><strong>Email:</strong> victor.gongar.work@gmail.com</p>
+        <p><strong>LinkedIn:</strong> 
+            <a href="https://www.linkedin.com/in/vgongar/">https://www.linkedin.com/in/vgongar/</a>
+        </p>
     </section>
 
     <footer>

@@ -1,5 +1,3 @@
-/* Colores seleccionados */
-
 :root {
   /* hsl (fallback color) */
   --bg-dark: hsl(358 100% 3%);
@@ -34,43 +32,43 @@
 }
 
 body.light {
-  /* hsl (fallback color) */
-  --bg-dark: hsl(35 100% 83%);
-  --bg: hsl(35 100% 88%);
-  --bg-light: hsl(35 100% 93%);
-  --gradient: linear-gradient(0deg, var(--bg) 97%, var(--bg-light));
-  --gradient-hover: linear-gradient(0deg, var(--bg), var(--bg-light));
+    /* hsl (fallback color) */
+    --bg-dark: hsl(35 100% 83%);
+    --bg: hsl(35 100% 88%);
+    --bg-light: hsl(35 100% 93%);
+    --gradient: linear-gradient(0deg, var(--bg) 97%, var(--bg-light));
+    --gradient-hover: linear-gradient(0deg, var(--bg), var(--bg-light));
 
-  --text: hsl(354 100% 6%);
-  --text-muted: hsl(31 100% 15%);
-  --highlight: hsl(37 100% 80%);
-  --border: hsl(40 100% 24%);
-  --border-muted: hsl(42 100% 30%);
-  --primary: hsl(31 100% 15%);
-  --secondary: hsl(211 100% 26%);
-  --danger: hsl(5 86% 39%);
-  --warning: hsl(51 100% 12%);
-  --success: hsl(159 100% 10%);
-  --info: hsl(216 85% 43%);
-  /* oklch */
-  --bg-dark: oklch(90.952% 0.08866 81.825);
-  --bg: oklch(0.96 0.095 75);
-  --bg-light: oklch(1 0.095 75);
-  --text: oklch(0.15 0.19 75);
-  --text-muted: oklch(0.4 0.19 75);
-  --highlight: oklch(1 0.19 75);
-  --border: oklch(0.6 0.19 75);
-  --border-muted: oklch(0.7 0.19 75);
-  --primary: oklch(0.4 0.19 75);
-  --secondary: oklch(0.4 0.19 255);
-  --danger: oklch(0.5 0.19 30);
-  --warning: oklch(0.5 0.19 100);
-  --success: oklch(0.5 0.19 160);
-  --info: oklch(0.5 0.19 260);
+    --text: hsl(354 100% 6%);
+    --text-muted: hsl(31 100% 15%);
+    --highlight: hsl(37 100% 80%);
+    --border: hsl(40 100% 24%);
+    --border-muted: hsl(42 100% 30%);
+    --primary: hsl(31 100% 15%);
+    --secondary: hsl(211 100% 26%);
+    --danger: hsl(5 86% 39%);
+    --warning: hsl(51 100% 12%);
+    --success: hsl(159 100% 10%);
+    --info: hsl(216 85% 43%);
+    /* oklch */
+    --bg-dark: oklch(90.952% 0.08866 81.825);
+    --bg: oklch(0.96 0.095 75);
+    --bg-light: oklch(1 0.095 75);
+    --text: oklch(0.15 0.19 75);
+    --text-muted: oklch(0.4 0.19 75);
+    --highlight: oklch(1 0.19 75);
+    --border: oklch(0.6 0.19 75);
+    --border-muted: oklch(0.7 0.19 75);
+    --primary: oklch(0.4 0.19 75);
+    --secondary: oklch(0.4 0.19 255);
+    --danger: oklch(0.5 0.19 30);
+    --warning: oklch(0.5 0.19 100);
+    --success: oklch(0.5 0.19 160);
+    --info: oklch(0.5 0.19 260);
 
-  
-  --ff: "Manrope", sans-serif;
-  --h1: 700 1.5rem/1.2em var(--ff);
+    
+    --ff: "Manrope", sans-serif;
+    --h1: 700 1.5rem/1.2em var(--ff);
 }
 
 * {
@@ -298,7 +296,6 @@ button:focus {
 button:hover{
     background: hsl(36, 100%, 44%, 0.4);
 }
-
 
 dialog{
     padding: 2em;

@@ -29,7 +29,7 @@ class Road{
 
     draw(ctx){
         ctx.lineWidth=5;
-        ctx.strokeStyle="white";
+        ctx.strokeStyle='rgb(255, 231, 255)';
 
         for(let i=1;i<=this.laneCount-1;i++){
             const x=lerp(

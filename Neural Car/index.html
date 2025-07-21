@@ -1,14 +1,103 @@
 <!DOCTYPE html>
 <head>
-    <title>Self-driving car - No libraries</title>
+    <title>Neural Cars</title>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="carCanvas"></canvas>
-    <div id="verticalButtons">
-        <button onclick="save()">💾</button>
-        <button onclick="discard()">🗑️</button>
+    <div style="width: 50vh">
+        <header style="display: flex; justify-content: space-between; margin-bottom: 2em;">
+            <div style="display: flex; align-items: center;">
+                <svg style="margin-right: 0.5em;" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car-icon lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                <h1>Neural Cars</h1>
+            </div>
+
+            <button class="button" onclick="helpPopup.showModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-question-mark-icon lucide-circle-question-mark"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            </button>
+        </header>
+
+        <div>
+            <div class="row">
+                <button class="button primary" onclick="save()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>    
+                </button>
+                <button class="button" onclick="discard()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+            </div>
+
+            <input class="input" style="display: block; margin: 1em auto;" type="number" value="0.1" name="mutationParameter" id="mutationInput">
+
+            <div class="row">
+                <button id="presetTrack1" style="font-size: 1.2rem;" class="button preset selected" onclick="selectTrack1()">Pista 1</button>
+                <button id="presetRandomTrack" style="font-size: 1.2rem;" class="button preset" onclick="selectRandomTrack()">Aleatorio</button>
+            </div>
+        </div>
     </div>
+
+    <dialog id="helpPopup">
+        <header style="display: flex; justify-content: space-between; margin-bottom: 1em;">
+            <h1>¿Qué es Neural Cars?</h1>
+            <button class="button" onclick="helpPopup.close()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+            </button>
+        </header>
+            <p>
+                <strong>Neural Cars</strong> es un simulador evolutivo en el que cada coche está controlado por una pequeña
+                red neuronal. En cada ronda se crean 200 coches que compiten por ver quién llega más lejos. 
+                <br><br>
+                Usa el botón  <svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
+                para guardar el coche que haya llegado más lejos hasta el momento. Este estará de un color morado más oscuro y el resto 
+                se verán transparentes. Cuando guardes el coche se pasará a la siguiente ronda.
+                <br><br>
+                Cuando se pasa a la siguiente ronda se crean otros 200 coches:
+                <ul style="margin-left: 1.2em;">
+                    <li>
+                        1 de color verde que representará aquel que guardaste. Tendrá exactamente la misma red 
+                        en la anterior etapa.
+                    </li>
+                    <li>
+                        199 nuevos coches generados en base al mejor. La red neuronal de estos 
+                        se obtiene modificando cada uno de los parámetros de la red del coche que guardaste 
+                        según el valor de mutación especificado en la caja de color blanco, por defecto 0.1 o 10%. 
+                        Puedes cambiar este valor modificando el valor de la caja blanca y recargar la página para 
+                        ver su efecto en los coches.
+                    </li>
+                </ul>
+                <br>
+                Si en algún momento quieres reiniciar el entrenamiento/evolución pulsa el botón <svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>.
+                ¡Cuidado! Esta opción borrará el cerebro que tuvieras antes guardado. Si no te ha gustado como se ha 
+                desarrollado una ronda en concreto pero crees que aún así pueden mejorar desde esa base (por ejemplo modificando 
+                el parámetro de mutación) simplemente recarga la página y se generará otra ronda nueva.
+                <br><br>
+                Se han dispuesto dos pistas: una en la que se puede realizar un entrenamiento controlado 
+                y otra pista, con un tráfico aleatorio. Recomiendo que primero se trabaje en la pista de entrenamiento, y una
+                vez superada se pase a la de tráfico aleatorio.
+            </p>
+            <h1>Consejos para entrenadores novatos.</h1>
+            <p>
+                Comienza en la pista de entrenamiento. Verás que al principio los coches se mueven al azar pero que 
+                alguno parece que distingue obstáculos y los intenta esquivar. Probablemente ese sea el mejor coche 
+                de esta ronda, así que dale al botón de guardar para que pase a la siguiente ronda. Te recomiendo que 
+                en las primeras rondas pongas el parámetro de mutación en un valor un poco más alto como 0.3 para permitir
+                que haya más diversidad. A medida que avances en el entrenamiento es posible que tengas una red que se mueve 
+                con cierta soltura pero que su comportamiento general es bueno. En ese momento es recomendable que vayas 
+                disminuyendo el parámetro para pulir resultados.
+                <br><br>
+                Si te quedas atascado en algún obstáculo es preferible que aumentes el parámetro de mutación un poco 
+                para permitir que nuevas ideas surjan de nuevo entre los coches y encuentren la solución.
+            </p>
+
+            ¡Espero que te entretengas mucho!
+    </dialog>
+
+    <canvas id="carCanvas"></canvas>
     <canvas id="networkCanvas"></canvas>
     <script src="visualizer.js"></script>
     <script src="network.js"></script>
