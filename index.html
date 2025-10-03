@@ -7,13 +7,33 @@
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    
+
+    <link href="https://fonts.cdnfonts.com/css/manjari-2?styles=170507" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="light">
+    <div class="overlay" id="overlay"></div>
+    <div id="canvas-container">
+        <canvas id="fondo"></canvas>
+        <div id="channel-grid">
+            <div class="channel zoomable" id="sobre-mi" data-url="sobre mi/index.html" data-title="Sobre mí"></div>
+            <div class="channel zoomable" id="vector-field" data-url="Vector field plotter/index.html" data-title="Vector Field Plotter"></div>
+            <div class="channel zoomable" id="neural-car" data-url="Neural Car/index.html" data-title="Neural Car"></div>
+            <div class="channel zoomable" id="trabajo-R" data-url="trabajo R/Informe.pdf" data-title="Efectividad La Liga"></div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+            <div class="channel empty">Wii</div>
+        </div>
+    </div>
+    
+<!--
     <header>
         <img src="images/foto.jpg" alt="yo">
         <h1>Víctor González García</h1>
@@ -35,7 +55,7 @@
     <section id="projects">
         <h2>Proyectos</h2>
             <div class="cards">
-                <!-- Tarjeta 1 -->
+                
                 <div class="card shadow">
                     <img src="images/vectorfieldplotter.png" alt="Miniatura Vector Field"> 
                     <div>    
@@ -67,7 +87,7 @@
                     </div> 
                 </div>
 
-                <!-- Tarjeta 2 -->
+                
                 <div class="card shadow">
                     <img src="images/neuralcar.png" alt="Miniatura Neural Car"> 
                     <div>    
@@ -99,7 +119,7 @@
                 </div>
             </div>
 
-            <!-- Tarjeta 2 -->
+            
                 <div class="card shadow">
                     <img src="images/informe.png" alt="Miniatura informe"> 
                     <div>    
@@ -145,5 +165,138 @@
     <footer>
         <p>&copy; 2025 Víctor González García. Todos los derechos reservados.</p>
     </footer>
+-->
+    <script>
+    const zoomables = document.querySelectorAll(".zoomable");
+    const overlay = document.getElementById("overlay"); // fondo negro cuando clicamos en un canal
+    
+    // Añadimos los event listeners para cada zoomable
+    zoomables.forEach(e => {
+    e.addEventListener("click", () => {
+        console.log("Clicked on an element")
+        if(e.classList.contains("zoom")){
+            //log("Clicked on a zoom element")
+            e.classList.remove("zoom");
+            overlay.classList.remove("active")
+            overlay.replaceChildren();
+        } else {
+            //console.log("Clicked on a not zoom element");
+            e.classList.add("zoom");
+            overlay.appendChild(e.cloneNode(true));
+            overlay.classList.add("active");
+
+            // Añadir botón y título del canal cuando se clica
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("zoom-wrapper");
+
+            const title = document.createElement("span");
+            title.textContent = e.dataset.title; 
+            title.classList.add("zoom-label");
+
+            const enlace = document.createElement("a");
+            enlace.textContent = "Ir";
+            enlace.href = e.dataset.url;        // URL del enlace
+            enlace.target = "_blank";           // abre en nueva pestaña (opcional)
+            enlace.classList.add("zoom-link");
+
+            // Añadir elementos al wrapper
+            wrapper.appendChild(title);
+            wrapper.appendChild(enlace);
+
+            // Insertar en overlay
+            overlay.appendChild(wrapper);
+        }
+        });
+    });
+
+    overlay.addEventListener("click", () => {
+        //console.log("Clicked on overlay")
+        const activo = document.querySelector(".zoomable.zoom"); // busca el que esté abierto
+        if (activo) {
+            activo.classList.remove("zoom");
+            overlay.replaceChildren(); // Elimina todos los nodos hijos
+            zoomables.forEach(e => {
+                e.classList.remove("zoom");
+            });
+        }
+        overlay.classList.remove("active");
+    });
+
+
+    // cursor personalizado
+    const cursor = document.createElement("div");
+    cursor.classList.add("cursor");
+    document.body.appendChild(cursor);
+
+    document.addEventListener("mousemove", e => {
+        let correction = e.clientX - 22 // El puntero tiene el dedo en el pixel 22 (en la textura)
+        cursor.style.left = correction + "px";
+        cursor.style.top = e.clientY + "px";
+    });
+
+    // Dibujar el fondo
+    const canvas = document.getElementById("fondo");
+    const ctx = canvas.getContext("2d");
+
+    function redimensionar() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      dibujarFondo();
+    }
+
+    function dibujarFondo() {
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Dibujar líneas horizontales (imitando las rayas finas del Wii)
+      ctx.strokeStyle = "rgba(200,200,200,0.3)";
+      ctx.lineWidth = 1;
+      for (let y = 0; y < h; y += 4) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+      // Fondo blanco con ligeras líneas grises
+      const grad = ctx.createRadialGradient(0.5*w, 0.5*h, 0, 0.5*w, 0.5*h, 0.5*h);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      grad.addColorStop(1, 'rgba(232, 232, 232, 0.3)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Barra inferior con curva azul
+      ctx.beginPath();
+      ctx.moveTo(0, 0.85*h);
+      ctx.lineTo(0.25*w, 0.85*h);
+
+      ctx.bezierCurveTo(
+        0.3*w, 0.85*h,
+        0.3*w, 0.9*h,
+        0.35*w, 0.9*h
+       );
+      
+      ctx.lineTo(0.65*w, 0.9*h);
+      
+      ctx.bezierCurveTo(
+        0.7*w, 0.9*h,
+        0.7*w, 0.85*h,
+        0.75*w, 0.85*h
+      );
+      
+      ctx.lineTo(w, 0.85*h);
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+
+      ctx.fillStyle = "#f2f2f2";
+      ctx.fill();
+      ctx.strokeStyle = "#00bfff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    window.addEventListener("resize", redimensionar);
+    redimensionar();
+  </script>
 </body>
 </html>

@@ -4,210 +4,205 @@
     padding: 0;
 }
 
-:root {
-    /* hsl (fallback color) */
-    --bg-dark: hsl(203 100% 1%);
-    --bg: hsl(198 71% 4%);
-    --bg-light: hsl(196 43% 8%);
-    --text: hsl(197 100% 93%);
-    --text-muted: hsl(197 28% 68%);
-    --highlight: hsl(196 22% 37%);
-    --border: hsl(196 30% 26%);
-    --border-muted: hsl(195 50% 16%);
-    --primary: hsl(195 67% 63%);
-    --secondary: hsl(17 69% 70%);
-    --danger: hsl(9 26% 64%);
-    --warning: hsl(52 19% 57%);
-    --success: hsl(146 17% 59%);
-    --info: hsl(217 28% 65%);
-    /* oklch */
-    --bg-dark: oklch(0.1 0.02 223);
-    --bg: oklch(0.15 0.02 223);
-    --bg-light: oklch(0.2 0.02 223);
-    --text: oklch(0.96 0.04 223);
-    --text-muted: oklch(0.76 0.04 223);
-    --highlight: oklch(0.5 0.04 223);
-    --border: oklch(0.4 0.04 223);
-    --border-muted: oklch(0.3 0.04 223);
-    --primary: oklch(0.76 0.1 223);
-    --secondary: oklch(0.76 0.1 43);
-    --danger: oklch(0.7 0.05 30);
-    --warning: oklch(0.7 0.05 100);
-    --success: oklch(0.7 0.05 160);
-    --info: oklch(0.7 0.05 260);
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
 
-    --ff: "Manrope", sans-serif;
-    
-    --h1: bold 54px/60px var(--ff);
-    --h2: bold 36px/48px var(--ff);
-    --h3: bold 24px/36px var(--ff);
-    --links: 18px/18px var(--ff);
-
-    --p: 18px/30px var(--ff);
-    --p1: 24px/30px var(--ff);
-    --p2: 36px/48px var(--ff);
-    --subtext: 12px/20px var(--ff);
-    --transition: 0.3s ease-in-out;
-}
-
-body.light {
-    /* hsl (fallback color) */
-    --bg-dark: hsl(197 41% 89%);
-    --bg: hsl(197 78% 94%);
-    --bg-light: hsl(197 100% 99%);
-    --text: hsl(200 100% 4%);
-    --text-muted: hsl(196 30% 26%);
-    --highlight: hsl(197 100% 99%);
-    --border: hsl(196 18% 49%);
-    --border-muted: hsl(197 22% 61%);
-    --primary: hsl(192 100% 14%);
-    --secondary: hsl(19 70% 26%);
-    --danger: hsl(9 21% 41%);
-    --warning: hsl(52 23% 34%);
-    --success: hsl(147 19% 36%);
-    --info: hsl(217 22% 41%);
-    /* oklch */
-    --bg-dark: oklch(0.92 0.02 223);
-    --bg: oklch(0.96 0.02 223);
-    --bg-light: oklch(1 0.02 223);
-    --text: oklch(0.15 0.04 223);
-    --text-muted: oklch(0.4 0.04 223);
-    --highlight: oklch(1 0.04 223);
-    --border: oklch(0.6 0.04 223);
-    --border-muted: oklch(0.7 0.04 223);
-    --primary: oklch(0.4 0.1 223);
-    --secondary: oklch(0.4 0.1 43);
-    --danger: oklch(0.5 0.05 30);
-    --warning: oklch(0.5 0.05 100);
-    --success: oklch(0.5 0.05 160);
-    --info: oklch(0.5 0.05 260);
-
-    --gradient: linear-gradient(0deg, var(--bg) 95%, var(--bg-light));
 }
 
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: var(--bg-dark);
-    color: var(--text-muted);
+    background-color: white;
+    cursor: none;
 }
 
-h1 {font: var(--h1);}
-h2 {font: var(--h2);}
-h3 {font: var(--h3);}
-p  {font: var(--p);}
+.cursor {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    background: url("images/puntero.png") no-repeat center/contain;
+    pointer-events: none;
+    /* no bloquea clics */
+    z-index: 100;
+    /*transform: translate(-50%, -50%); /* centra el div en el puntero */
+}
 
-header {
+#canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#channel-grid {
+    /* Rejilla*/
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+
+    /*Posición y tamaño*/
+    position: absolute;
+    top: 2.5vh;
+    left: 10vw;
+    height: 80%;
+    width: 80%;
+}
+
+.channel {
+    width: 100%;
+    height: 100%;
+    corner-shape: superellipse(1.1);
+    /*solo en chrome*/
+    border-radius: 10%;
+    border: 2px solid grey;
+}
+
+.channel.zoomable:hover {
+    border: 2px solid #00bfff;
+}
+
+.empty {
+    background-image: url("images/rayas.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+
+    animation: emptyEffect 20s infinite linear;
+    font-family: 'Manjari', sans-serif;
+
+    font-size: 300%;
+
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-
-    width: 90vw;
-    height: 10vh;
-
-    background-color: inherit;
-    border-bottom: 1px solid var(--highlight);
-    
-    margin: 1em auto;
-    padding: 1em
+    justify-content: center;
 }
 
-header img {
-    max-height: 10vh;
+#sobre-mi {
+    background-image: url("images/foto.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
-
-header nav {
-    display: flex;
-    gap: 1rem; /* Espaciado entre enlaces */
+#vector-field {
+    background-image: url("images/vectorfieldplotter.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
-header nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s; /* Animación suave en hover */
+#trabajo-R {
+    background-image: url("images/informe.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 0;
 }
 
-header nav a:hover {
-    color: #ccc; /* Cambia el color al pasar el mouse */
+#neural-car {
+    background-image: url("images/neuralcar.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
-section {
-    max-width: 800px;
-    margin: 2em auto;
+canvas {
+    width: 100%;
+    height: 100%;
+    z-index: -4;
 }
 
-.card {
-    margin: 2em 0;
-    background: var(--bg);
-    border-radius: 1em;
-    border: 1px solid var(--bg);
-    border-top: 1px solid var(--highlight);
-
-    max-width: 900px;
-
-    overflow: hidden;
-
-    display: flex;
+.zoomable {
+    transition: transform 0.3s ease;
 }
 
-.card img {
-    border-radius: inherit;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    max-width: 300px;
+.zoomable.zoom {
+    border: none;
+    width: 90%;
+    height: 90%;
+    background-size: contain;
 }
 
-.card div {
-    margin: 1em;
-    margin-left: 2em;
+.zoomable.zoom:hover {
+    border: none;
 }
 
-.card .tags{
+.zoom-wrapper {
+  position: absolute;
+  width: 90%;
+  height: 10%;
+  bottom: 5%;
+  display: flex;
+  justify-content: space-around;
+    padding: 1em 0em 1em 0em;
+  background-color: aliceblue;
+}
+
+.zoom-label {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 0.1em 1em;
+  font-family: 'Manjari', sans-serif;
+  border-radius: 1em;
+  font-size: 2em;
+  align-content: center;
+}
+
+.zoom-link {
+  background: #00bfff;
+  color: white;
+  text-decoration: none;
+  padding: 0.1em 1em;
+  font-family: 'Manjari', sans-serif;
+  border-radius: 1em;
+  font-size: 2em;
+  align-content: center;
+  font-weight: bold;
+}
+
+.zoom-link:hover{
+    cursor: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    opacity: 0;
+    pointer-events: none;
+    /* que no bloquee clicks mientras no esté activo */
+    transition: opacity 0.3s ease;
+    z-index: 5;
+
     display: flex;
     justify-content: center;
-    margin: 0;
-    padding: 0;
+    align-items: center;
 }
 
-.card .tag{
-    padding: 0.2em 0.5em;
-    border-radius: 2em;
-    margin: 0 0.5em;
-
-    background-color: var(--bg-light);
-    color: var(--text-muted);
-    font-size: 0.9rem;
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.button {
-    cursor: pointer;
-    margin-left: auto; /* se alinea a la derecha */
-    padding: 0.5em;
-    text-decoration: none;
-    border-radius: 1em;
-    background-color: var(--primary);
-    color: var(--bg);
-}
+@keyframes emptyEffect {
+    from {
+        background-position: 0 0;
+    }
 
-.card:hover{
-    transform: translateY(-12px);
-    transition: var(--transition);
-}
-
-.shadow {
-    box-shadow: 0px 4px 4px #00000030, 0px 12px 12px #00000015;
-}
-
-
-
-
-footer {
-    text-align: center;
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
-    margin-top: 2rem;
+    to {
+        background-position: 0 100%;
+    }
 }

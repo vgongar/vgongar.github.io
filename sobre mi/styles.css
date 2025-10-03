@@ -1,0 +1,213 @@
+* {
+    font-family: "Manrope", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* hsl (fallback color) */
+    --bg-dark: hsl(203 100% 1%);
+    --bg: hsl(198 71% 4%);
+    --bg-light: hsl(196 43% 8%);
+    --text: hsl(197 100% 93%);
+    --text-muted: hsl(197 28% 68%);
+    --highlight: hsl(196 22% 37%);
+    --border: hsl(196 30% 26%);
+    --border-muted: hsl(195 50% 16%);
+    --primary: hsl(195 67% 63%);
+    --secondary: hsl(17 69% 70%);
+    --danger: hsl(9 26% 64%);
+    --warning: hsl(52 19% 57%);
+    --success: hsl(146 17% 59%);
+    --info: hsl(217 28% 65%);
+    /* oklch */
+    --bg-dark: oklch(0.1 0.02 223);
+    --bg: oklch(0.15 0.02 223);
+    --bg-light: oklch(0.2 0.02 223);
+    --text: oklch(0.96 0.04 223);
+    --text-muted: oklch(0.76 0.04 223);
+    --highlight: oklch(0.5 0.04 223);
+    --border: oklch(0.4 0.04 223);
+    --border-muted: oklch(0.3 0.04 223);
+    --primary: oklch(0.76 0.1 223);
+    --secondary: oklch(0.76 0.1 43);
+    --danger: oklch(0.7 0.05 30);
+    --warning: oklch(0.7 0.05 100);
+    --success: oklch(0.7 0.05 160);
+    --info: oklch(0.7 0.05 260);
+
+    --ff: "Manrope", sans-serif;
+    
+    --h1: bold 54px/60px var(--ff);
+    --h2: bold 36px/48px var(--ff);
+    --h3: bold 24px/36px var(--ff);
+    --links: 18px/18px var(--ff);
+
+    --p: 18px/30px var(--ff);
+    --p1: 24px/30px var(--ff);
+    --p2: 36px/48px var(--ff);
+    --subtext: 12px/20px var(--ff);
+    --transition: 0.3s ease-in-out;
+}
+
+body.light {
+    /* hsl (fallback color) */
+    --bg-dark: hsl(197 41% 89%);
+    --bg: hsl(197 78% 94%);
+    --bg-light: hsl(197 100% 99%);
+    --text: hsl(200 100% 4%);
+    --text-muted: hsl(196 30% 26%);
+    --highlight: hsl(197 100% 99%);
+    --border: hsl(196 18% 49%);
+    --border-muted: hsl(197 22% 61%);
+    --primary: hsl(192 100% 14%);
+    --secondary: hsl(19 70% 26%);
+    --danger: hsl(9 21% 41%);
+    --warning: hsl(52 23% 34%);
+    --success: hsl(147 19% 36%);
+    --info: hsl(217 22% 41%);
+    /* oklch */
+    --bg-dark: oklch(0.92 0.02 223);
+    --bg: oklch(0.96 0.02 223);
+    --bg-light: oklch(1 0.02 223);
+    --text: oklch(0.15 0.04 223);
+    --text-muted: oklch(0.4 0.04 223);
+    --highlight: oklch(1 0.04 223);
+    --border: oklch(0.6 0.04 223);
+    --border-muted: oklch(0.7 0.04 223);
+    --primary: oklch(0.4 0.1 223);
+    --secondary: oklch(0.4 0.1 43);
+    --danger: oklch(0.5 0.05 30);
+    --warning: oklch(0.5 0.05 100);
+    --success: oklch(0.5 0.05 160);
+    --info: oklch(0.5 0.05 260);
+
+    --gradient: linear-gradient(0deg, var(--bg) 95%, var(--bg-light));
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--bg-dark);
+    color: var(--text-muted);
+}
+
+h1 {font: var(--h1);}
+h2 {font: var(--h2);}
+h3 {font: var(--h3);}
+p  {font: var(--p);}
+
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 90vw;
+    height: 10vh;
+
+    background-color: inherit;
+    border-bottom: 1px solid var(--highlight);
+    
+    margin: 1em auto;
+    padding: 1em
+}
+
+header img {
+    max-height: 10vh;
+}
+
+
+header nav {
+    display: flex;
+    gap: 1rem; /* Espaciado entre enlaces */
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s; /* Animación suave en hover */
+}
+
+header nav a:hover {
+    color: #ccc; /* Cambia el color al pasar el mouse */
+}
+
+section {
+    max-width: 800px;
+    margin: 2em auto;
+}
+
+.card {
+    margin: 2em 0;
+    background: var(--bg);
+    border-radius: 1em;
+    border: 1px solid var(--bg);
+    border-top: 1px solid var(--highlight);
+
+    max-width: 900px;
+
+    overflow: hidden;
+
+    display: flex;
+}
+
+.card img {
+    border-radius: inherit;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    max-width: 300px;
+}
+
+.card div {
+    margin: 1em;
+    margin-left: 2em;
+}
+
+.card .tags{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.card .tag{
+    padding: 0.2em 0.5em;
+    border-radius: 2em;
+    margin: 0 0.5em;
+
+    background-color: var(--bg-light);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.button {
+    cursor: pointer;
+    margin-left: auto; /* se alinea a la derecha */
+    padding: 0.5em;
+    text-decoration: none;
+    border-radius: 1em;
+    background-color: var(--primary);
+    color: var(--bg);
+}
+
+.card:hover{
+    transform: translateY(-12px);
+    transition: var(--transition);
+}
+
+.shadow {
+    box-shadow: 0px 4px 4px #00000030, 0px 12px 12px #00000015;
+}
+
+
+
+
+footer {
+    text-align: center;
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
